@@ -1,0 +1,68 @@
+<idea-plugin>
+    <id>com.github.pshirshov.bytecodeeditor.xenoamess</id>
+    <name>Bytecode Editor(XenoAmess TPM)</name>
+    <version>0.3.0</version>
+    <vendor
+            email="xenoamess@gmail.com"
+            url="https://github.com/XenoAmess"
+    >XenoAmess</vendor>
+    <description>
+        <![CDATA[
+        <p>Provides <i>View | Edit Bytecode</i> action for those who learns JVM internals.</p>
+
+        <p>
+        Based on ByteCode Viewer by JetBrains but is better:
+        <ul>
+            <li>it uses an editor tab instead of a popup</li>
+            <li>it allows you to edit bytecode assembler and assemble edited code back into .class files</li>
+            <li>it provides default hotkey for bytecode analysis: <em>Ctrl+K, Ctrl+B</em></li>
+        </ul>
+         </p>
+
+        <p>Based on ASM6.</p>
+
+        <p>It's a very gloomy tool. WIP.</p>
+
+        <p>TODO:
+            <ul>
+                <li>Support for ASM Textifier representation</li>
+                <li>Support for ASM Textifier representation assembling</li>
+                <li>Check Jasmin compatibility with recent class file versions and rework it if required</li>
+                <li>Representation switching</li>
+                <li>Krakatau integration (maybe, I'm not sure)</li>
+                <li>Refactor all that shit!</li>
+            </ul>
+
+            Patches are welcome...
+        </p>
+
+        ]]>
+    </description>
+    <change-notes><![CDATA[
+        <ul>
+            <li><em>0.2.0</em>: ASM XML format is used by default. Jasmin/ASM Textifier are temporarily turned off</li>
+            <li><em>0.1.3</em>: Replaced outdated Jasper disassembler with ASM 6</li>
+        </ul>
+    ]]></change-notes>
+    <idea-version since-build="181.5540.23"/>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <projectService serviceInterface="com.github.pshirshov.conversion.BytecodeConverter"
+                        serviceImplementation="com.github.pshirshov.conversion.BytecodeConverter"/>
+        <fileEditorProvider implementation="com.github.pshirshov.EditorProvider"/>
+    </extensions>
+
+    <actions>
+        <group>
+            <action id="ByteCodeEditor" class="com.github.pshirshov.ShowByteCodeAction"
+                    text="Edit Bytecode">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl K" second-keystroke="ctrl B"/>
+            </action>
+            <add-to-group group-id="QuickActions" anchor="after" relative-to-action="QuickJavaDoc"/>
+        </group>
+    </actions>
+
+    <depends>com.intellij.modules.java</depends>
+    <depends>ByteCodeViewer</depends>
+
+</idea-plugin>
