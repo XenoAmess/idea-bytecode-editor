@@ -9,6 +9,12 @@ dependencies {
     implementation fileTree(dir:'lib',include:['*.jar'])
 }
 
+allprojects {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_11
+    compileJava.options.encoding = 'UTF-8'
+}
+
 repositories {
     mavenLocal()
     mavenCentral()
