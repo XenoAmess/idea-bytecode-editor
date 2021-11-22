@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id "org.jetbrains.intellij" version "1.1.4"
+}
+
+apply plugin: 'idea'
+
+dependencies {
+    implementation fileTree(dir:'lib',include:['*.jar'])
+}
+
+allprojects {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_11
+    compileJava.options.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+    maven {
+        url 'https://dl.bintray.com/jetbrains/intellij-plugin-service'
+    }
+    gradlePluginPortal()
+}
+
+def myPlugins = ['java','ByteCodeViewer']
+
+intellij {
+    version.set(idea_version)
+    plugins.set(myPlugins)
+    pluginName.set(plugin_name)
+    updateSinceUntilBuild.set(false)
+}
+
+version plugin_version
+
+dependencies {
+    implementation group: 'ca.mcgill.sable', name: 'jasmin', version: '3.0.2'
+}
