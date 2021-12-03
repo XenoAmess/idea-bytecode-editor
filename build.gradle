@@ -5,10 +5,6 @@ plugins {
 
 apply plugin: 'idea'
 
-//dependencies {
-//    implementation fileTree(dir:'lib',include:['*.jar'])
-//}
-
 allprojects {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_11
