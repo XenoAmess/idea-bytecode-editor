@@ -1,7 +1,7 @@
 package com.github.pshirshov.conversion.jasmin;
 
 import com.github.pshirshov.conversion.DisassembleStrategy;
-import com.github.pshirshov.org.objectweb.asm.ClassReader;
+import com.xenoamess.org.objectweb.asm.v_9_2.ClassReader;
 import com.github.pshirshov.util.IdeaUtils;
 import com.intellij.openapi.editor.Document;
 
