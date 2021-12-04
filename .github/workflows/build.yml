@@ -37,7 +37,13 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
           distribution: adopt
-      - name: Build with mvnw
+      - name: Build plugin
         run: |
+          git submodule init
+          git submodule update
+          cd ./shade_asm
+          chmod 777 ./mvnw
+          ./mvnw install
+          cd ..
           chmod 777 ./gradlew
-          ./gradlew buildPlugin -s
+          ./gradlew clean buildPlugin

@@ -1,0 +1,4 @@
+[submodule "shade_asm"]
+	path = shade_asm
+	url = https://github.com/xenaomess-shade/shade_asm.git
+	branch = 9.2
