@@ -9,7 +9,6 @@ import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.*;
 import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.ex.EditorEx;
@@ -153,7 +152,7 @@ public class ByteCodeEditor extends UserDataHolderBase implements FileEditor {
                         lineNumber = mappedLine;
                     }
                 }
-                offset = this.file.getStrategy().getLineOffset(bytecodeXmlString, document, lineNumber);
+                offset = this.file.getDisassembleStrategy().getLineOffset(bytecodeXmlString, document, lineNumber);
             }
         }
 

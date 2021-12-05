@@ -1,24 +1,32 @@
 package com.github.pshirshov.util;
 
-import com.github.pshirshov.conversion.xml.XmlDisassembleStrategy;
+import com.github.pshirshov.conversion.DisassembleStrategy;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.PsiElement;
 import com.intellij.testFramework.BinaryLightVirtualFile;
+import org.jetbrains.annotations.NotNull;
 
 public class BCEVirtualFile extends BinaryLightVirtualFile {
-    private XmlDisassembleStrategy strategy;
+
+    private DisassembleStrategy disassembleStrategy;
+
     private PsiElement element;
 
-
-    public BCEVirtualFile(String name, FileType fileType, byte[] content, PsiElement element,
-                          XmlDisassembleStrategy disassembleStrategy) {
+    public BCEVirtualFile(
+            String name,
+            FileType fileType,
+            byte[] content,
+            PsiElement element,
+            DisassembleStrategy disassembleStrategy
+    ) {
         super(name, fileType, content);
         this.element = element;
-        this.strategy = disassembleStrategy;
+        this.disassembleStrategy = disassembleStrategy;
     }
 
 
     @Override
+    @NotNull
     public String getPresentableName() {
         final String[] parts = getPath().split("/");
         return parts[parts.length - 1];
@@ -35,12 +43,12 @@ public class BCEVirtualFile extends BinaryLightVirtualFile {
     }
 
 
-    public XmlDisassembleStrategy getStrategy() {
-        return strategy;
+    public DisassembleStrategy getDisassembleStrategy() {
+        return disassembleStrategy;
     }
 
 
-    public void setStrategy(XmlDisassembleStrategy strategy) {
-        this.strategy = strategy;
+    public void setDisassembleStrategy(DisassembleStrategy disassembleStrategy) {
+        this.disassembleStrategy = disassembleStrategy;
     }
 }
