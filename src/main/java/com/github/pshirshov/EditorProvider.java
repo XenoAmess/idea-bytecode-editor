@@ -1,7 +1,6 @@
 package com.github.pshirshov;
 
-import com.github.pshirshov.util.BCEVirtualFile;
-import com.intellij.openapi.diagnostic.Logger;
+import com.github.pshirshov.vfs.DisassembledVirtualFile;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorPolicy;
 import com.intellij.openapi.fileEditor.FileEditorProvider;
@@ -16,15 +15,15 @@ public class EditorProvider implements FileEditorProvider {
 
     @Override
     public boolean accept(@NotNull Project project, @NotNull VirtualFile virtualFile) {
-        return virtualFile instanceof BCEVirtualFile;
+        return virtualFile instanceof DisassembledVirtualFile;
     }
 
 
     @NotNull
     @Override
     public FileEditor createEditor(@NotNull Project project, @NotNull VirtualFile virtualFile) {
-        final BCEVirtualFile asVfile = (BCEVirtualFile) virtualFile;
-        return new ByteCodeEditor(project, asVfile);
+        final DisassembledVirtualFile asVfile = (DisassembledVirtualFile) virtualFile;
+        return new ByteCodeFileEditor(project, asVfile);
     }
 
 

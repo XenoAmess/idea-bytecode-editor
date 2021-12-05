@@ -1,12 +1,7 @@
-package com.github.pshirshov.conversion.xml;
+package com.github.pshirshov.conversion.impl.asm_xml;
 
-import com.github.pshirshov.conversion.DisassembleStrategy;
-import com.xenoamess.org.objectweb.asm.v_9_2.ClassReader;
-import com.xenoamess.org.objectweb.asm.v_9_2.xml.SAXClassAdapter;
-import com.github.pshirshov.util.IdeaUtils;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-
+import java.io.StringWriter;
+import java.io.Writer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -14,10 +9,20 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.StringWriter;
-import java.io.Writer;
 
-public class XmlDisassembleStrategy implements DisassembleStrategy {
+import com.github.pshirshov.conversion.Disassembler;
+import com.github.pshirshov.util.IdeaUtils;
+import com.xenoamess.org.objectweb.asm.v_9_2.ClassReader;
+import com.xenoamess.org.objectweb.asm.v_9_2.xml.SAXClassAdapter;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+
+public class AsmXmlDisassembler implements Disassembler {
+
+    public static final AsmXmlDisassembler INSTANCE = new AsmXmlDisassembler();
+
+    private AsmXmlDisassembler() {
+    }
 
     @Override
     public String disassemble(byte[] classfile) {
@@ -55,8 +60,17 @@ public class XmlDisassembleStrategy implements DisassembleStrategy {
 
 
     @Override
-    public int getLineOffset(String bytecode, com.intellij.openapi.editor.Document document, int lineNumber) {
-        return IdeaUtils.findSubstringOffset(bytecode, document, lineNumber, "<LineNumber line=\"");
+    public int getLineOffset(
+            String assembledByteCodeString,
+            com.intellij.openapi.editor.Document document,
+            int lineNumber
+    ) {
+        return IdeaUtils.findSubstringOffset(
+                assembledByteCodeString,
+                document,
+                lineNumber,
+                "<LineNumber line=\""
+        );
     }
 
 
