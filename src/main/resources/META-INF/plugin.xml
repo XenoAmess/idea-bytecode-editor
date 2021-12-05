@@ -1,25 +1,33 @@
 <idea-plugin>
     <id>com.github.pshirshov.bytecodeeditor.xenoamess</id>
     <name>Bytecode Editor(XenoAmess TPM)</name>
-    <version>0.3.1</version>
+    <version>0.3.2</version>
     <vendor
             email="xenoamess@gmail.com"
             url="https://github.com/XenoAmess"
     >XenoAmess</vendor>
     <description>
         <![CDATA[
-        <p>Provides <i>View | Edit Bytecode</i> action for those who learns JVM internals.</p>
-
+        <p><b>Bytecode Editor(XenoAmess TPM)</b></p>
+        <br/>
+        <p><b>Third-party maintenance by XenoAmess.</b></p>
+        <br/>
+        <p>This Third-party maintenance(TPM) here is forked from original [pshirshov/idea-bytecode-editor](https://github.com/pshirshov/idea-bytecode-editor)</p>
+        <br/>
+        <p>Follows BSD 2-Clause "Simplified" License described in [license](https://github.com/XenoAmess/idea-bytecode-editor/blob/master/LICENSE)</p>
+        <br/>
+        <p>Sources can be found https://github.com/XenoAmess/idea-bytecode-editor/</p>
+        <br/>
+        <p>Provides <i>View | Edit Bytecode</i> action for those who want to edit JVM class bytecodes.</p>
         <p>
         Based on ByteCode Viewer by JetBrains but is better:
         <ul>
             <li>it uses an editor tab instead of a popup</li>
             <li>it allows you to edit bytecode assembler and assemble edited code back into .class files</li>
-            <li>it provides default hotkey for bytecode analysis: <em>Ctrl+K, Ctrl+B</em></li>
         </ul>
-         </p>
+        </p>
 
-        <p>Based on ASM6.</p>
+        <p>Based on ASM9.2</p>
 
         <p>It's a very gloomy tool. WIP.</p>
 
@@ -39,11 +47,21 @@
         ]]>
     </description>
     <change-notes><![CDATA[
-        <ul>
-            <li><em>0.2.0</em>: ASM XML format is used by default. Jasmin/ASM Textifier are temporarily turned off</li>
-            <li><em>0.1.3</em>: Replaced outdated Jasper disassembler with ASM 6</li>
-            <li><em>0.3.0</em>: Make it can use on latest Jetbrains idea.</li>
-            <li><em>0.3.1</em>: asm from 6 to 9.2</li>
+        <ul>0.1.3
+            <li>Replaced outdated Jasper disassembler with ASM 6</li>
+        </ul>
+        <ul>0.2.0
+            <li>ASM XML format is used by default. Jasmin/ASM Textifier are temporarily turned off</li>
+        </ul>
+        <ul>0.3.0
+            <li>Make it can work on latest Jetbrains idea.</li>
+        </ul>
+        <ul>0.3.1
+            <li>asm from 6 to 9.2</li>
+        </ul>
+        <ul>0.3.2
+            <li>clean up codes.</li>
+            <li>allow multiple AssembleStrategy.</li>
         </ul>
     ]]></change-notes>
     <idea-version since-build="181.5540.23"/>
@@ -56,9 +74,11 @@
 
     <actions>
         <group>
-            <action id="ByteCodeEditor" class="com.github.pshirshov.ShowByteCodeAction"
-                    text="Edit Bytecode">
-                <keyboard-shortcut keymap="$default" first-keystroke="ctrl K" second-keystroke="ctrl B"/>
+            <action id="ShowByteCodeAsmXmlAction" class="com.github.pshirshov.action.impl.ShowByteCodeAsmXmlAction"
+                    text="Edit Bytecode As Asm Xml">
+            </action>
+            <action id="ShowByteCodeJasminAction" class="com.github.pshirshov.action.impl.ShowByteCodeJasminAction"
+                    text="Edit Bytecode As Jasmin(Read Only)">
             </action>
             <add-to-group group-id="QuickActions" anchor="after" relative-to-action="QuickJavaDoc"/>
         </group>

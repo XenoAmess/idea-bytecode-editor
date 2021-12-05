@@ -13,12 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.pshirshov;
+package com.github.pshirshov.action;
 
+import java.util.Objects;
+
+import com.github.pshirshov.ByteCodeFileEditor;
 import com.github.pshirshov.conversion.BytecodeConverter;
-import com.github.pshirshov.conversion.xml.XmlDisassembleStrategy;
-import com.github.pshirshov.util.BCEVirtualFile;
+import com.github.pshirshov.conversion.DisassembleStrategyEnum;
 import com.github.pshirshov.util.PsiUtils;
+import com.github.pshirshov.vfs.DisassembledVirtualFile;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.highlighter.JavaClassFileType;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -27,7 +30,6 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.compiler.CompilerManager;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
@@ -39,7 +41,11 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Computable;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiClassOwner;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.SmartPointerManager;
+import com.intellij.psi.SmartPsiElementPointer;
 import com.intellij.psi.util.PsiUtilCore;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,9 +53,10 @@ import org.jetbrains.annotations.NotNull;
  * @author anna
  * @since 5/4/12
  */
-public class ShowByteCodeAction extends AnAction {
-    private final XmlDisassembleStrategy disassembleStrategy = new XmlDisassembleStrategy();
+public abstract class AbstractShowByteCodeAction extends AnAction {
 
+    @NotNull
+    public abstract DisassembleStrategyEnum getDisassembleStrategyEnum();
 
     @Override
     public void update(AnActionEvent e) {
@@ -57,7 +64,8 @@ public class ShowByteCodeAction extends AnAction {
         e.getPresentation().setIcon(AllIcons.Toolwindows.Documentation);
         final Project project = e.getData(CommonDataKeys.PROJECT);
         if (project != null) {
-            final PsiElement psiElement = PsiUtils.getPsiElement(e.getDataContext(), project, e.getData(CommonDataKeys.EDITOR));
+            final PsiElement psiElement = PsiUtils.getPsiElement(e.getDataContext(), project,
+                    e.getData(CommonDataKeys.EDITOR));
             if (psiElement != null) {
                 if ((psiElement.getContainingFile() instanceof PsiClassOwner) &&
                         (PsiUtils.getContainingClass(psiElement) != null)) {
@@ -102,13 +110,16 @@ public class ShowByteCodeAction extends AnAction {
             public void run(@NotNull ProgressIndicator indicator) {
                 if (ProjectRootManager.getInstance(project).getFileIndex()
                         .isInContent(virtualFile) && isMarkedForCompilation(project, virtualFile)) {
-                    myErrorMessage = "Unable to show bytecode for '" + psiElementTitle + "'. Class file does not exist or is out-of-date.";
+                    myErrorMessage = "Unable to show bytecode for '" + psiElementTitle + "'. Class file does not " +
+                            "exist or is out-of-date.";
                     myErrorTitle = "Class File Out-Of-Date";
                 } else {
                     myByteCode = ApplicationManager.getApplication().runReadAction(new Computable<String>() {
                         @Override
                         public String compute() {
-                            return new BytecodeConverter(disassembleStrategy).getByteCode(psiElement);
+                            return new BytecodeConverter(
+                                    AbstractShowByteCodeAction.this.getDisassembleStrategyEnum()
+                            ).getByteCode(psiElement);
                         }
                     });
                 }
@@ -141,29 +152,54 @@ public class ShowByteCodeAction extends AnAction {
                 FileEditorManager manager = FileEditorManager.getInstance(project);
 
                 final String filename = '/' + psiClass.getQualifiedName().replace('.', '/') + ".bc";
-                BCEVirtualFile bceVirtualFile = new BCEVirtualFile(
-                        filename
-                        , JavaClassFileType.INSTANCE
-                        , myByteCode.getBytes()
-                        , psiElement
-                        , disassembleStrategy
+                DisassembledVirtualFile disassembledVirtualFile = new DisassembledVirtualFile(
+                        filename,
+                        JavaClassFileType.INSTANCE,
+                        myByteCode.getBytes(),
+                        psiElement,
+                        virtualFile,
+                        AbstractShowByteCodeAction.this.getDisassembleStrategyEnum()
                 );
 
                 for (FileEditor fileEditor : FileEditorManager.getInstance(project).getAllEditors()) {
-                    if (fileEditor instanceof ByteCodeEditor) {
-                        final ByteCodeEditor asBce = (ByteCodeEditor) fileEditor;
-                        if (asBce.getFile().getPath().equals(bceVirtualFile.getPath())) {
-                            FileEditorManager.getInstance(project).openFile(asBce.getFile(), true, true);
-                            asBce.update(bceVirtualFile);
+                    if (fileEditor instanceof ByteCodeFileEditor) {
+                        final ByteCodeFileEditor existedByteCodeFileEditor = (ByteCodeFileEditor) fileEditor;
+                        DisassembledVirtualFile existedDisassembledVirtualFile = existedByteCodeFileEditor.getFile();
+                        if (
+                                ifSameDisassembleStrategyAndSameOriginalFile(
+                                        disassembledVirtualFile,
+                                        existedDisassembledVirtualFile
+                                )
+                        ) {
+                            FileEditorManager
+                                    .getInstance(project)
+                                    .openFile(
+                                            existedDisassembledVirtualFile,
+                                            true,
+                                            true
+                                    );
+                            existedByteCodeFileEditor.update(disassembledVirtualFile);
                             return;
                         }
                     }
                 }
 
-                manager.openFile(bceVirtualFile, true, true);
+                manager.openFile(disassembledVirtualFile, true, true);
 
             }
         });
+    }
+
+    private static boolean ifSameDisassembleStrategyAndSameOriginalFile(
+            DisassembledVirtualFile disassembledVirtualFile,
+            DisassembledVirtualFile existedDisassembledVirtualFile
+    ) {
+        return Objects.equals(
+                existedDisassembledVirtualFile.getDisassembleStrategyEnum(),
+                disassembledVirtualFile.getDisassembleStrategyEnum()
+        )
+                &&
+                existedDisassembledVirtualFile.getPath().equals(disassembledVirtualFile.getPath());
     }
 
 
@@ -171,6 +207,5 @@ public class ShowByteCodeAction extends AnAction {
         final CompilerManager compilerManager = CompilerManager.getInstance(project);
         return !compilerManager.isUpToDate(compilerManager.createFilesCompileScope(new VirtualFile[]{virtualFile}));
     }
-
 
 }

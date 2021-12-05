@@ -15,10 +15,12 @@
  */
 package com.github.pshirshov.conversion;
 
+import java.io.File;
+import java.io.IOException;
+
 import com.github.pshirshov.util.IdeaUtils;
 import com.github.pshirshov.util.PsiUtils;
 import com.intellij.ide.highlighter.JavaClassFileType;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
@@ -33,24 +35,20 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiUtil;
 import com.intellij.psi.util.PsiUtilCore;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * @author anna
  * @since 5/7/12
  */
+@Slf4j
+@AllArgsConstructor
 public class BytecodeConverter {
-    private static final Logger LOG = Logger.getInstance(BytecodeConverter.class);
-    private final DisassembleStrategy strategy;
 
-
-    public BytecodeConverter(DisassembleStrategy strategy) {
-        this.strategy = strategy;
-    }
+    private final DisassembleStrategyEnum disassembleStrategyEnum;
 
     @Nullable
     private String tryGetByteCodeNew(@NotNull PsiFile containingFile) {
@@ -114,7 +112,7 @@ public class BytecodeConverter {
                             }
                         }
                     } catch (IOException e) {
-                        LOG.error(e);
+                        log.error("getByteCode failed", e);
                     }
                     return null;
                 }
@@ -155,12 +153,12 @@ public class BytecodeConverter {
 
             final File classFile = new File(classPath);
             if (!classFile.exists()) {
-                LOG.info("search in: " + classPath);
+                log.info("search in: " + classPath);
                 return null;
             }
             return processClassFile(FileUtil.loadFileBytes(classFile));
-        } catch (Exception e1) {
-            LOG.error(e1);
+        } catch (Exception e) {
+            log.error("getByteCode failed", e);
         }
         return null;
     }
@@ -168,7 +166,7 @@ public class BytecodeConverter {
 
     private String processClassFile(byte[] bytes) {
         try {
-            return strategy.disassemble(bytes);
+            return disassembleStrategyEnum.getDisassembler().disassemble(bytes);
         } catch (Throwable e) {
             IdeaUtils.showErrorNotification("Disassembler failed", e);
             return null;
