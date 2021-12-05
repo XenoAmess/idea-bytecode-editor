@@ -46,7 +46,11 @@ public class ExportAssembledClassAction extends AnAction {
     @Override
     public void update(AnActionEvent e) {
         e.getPresentation().setVisible(true);
-        e.getPresentation().setIcon(AllIcons.ToolbarDecorator.Export);
+        try {
+            e.getPresentation().setIcon(AllIcons.ToolbarDecorator.Export);
+        } catch (Exception exception) {
+            log.error("update failed", exception);
+        }
         e.getPresentation().setDescription("Compile into class file");
     }
 
