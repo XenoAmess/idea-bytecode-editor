@@ -19,7 +19,16 @@ public class ExportAssembledClassToOriginalClassFileAction extends ExportAssembl
     @Override
     public void update(AnActionEvent e) {
         e.getPresentation().setVisible(true);
-        e.getPresentation().setIcon(AllIcons.Actions.MenuSaveall);
+        try {
+            e.getPresentation().setIcon(AllIcons.Actions.MenuSaveall);
+        } catch (Exception exception) {
+            try {
+                e.getPresentation().setIcon(AllIcons.Actions.Menu_saveall);
+            } catch (Exception ignored) {
+            }
+            log.error("update failed", exception);
+        }
+
         e.getPresentation().setDescription("Save");
     }
 
