@@ -3,6 +3,8 @@ package com.github.pshirshov.action;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import javax.swing.Icon;
+
 import com.github.pshirshov.ByteCodeFileEditor;
 import com.github.pshirshov.vfs.DisassembledVirtualFile;
 import com.intellij.icons.AllIcons;
@@ -20,10 +22,10 @@ public class ExportAssembledClassToOriginalClassFileAction extends ExportAssembl
     public void update(AnActionEvent e) {
         e.getPresentation().setVisible(true);
         try {
-            e.getPresentation().setIcon(AllIcons.Actions.MenuSaveall);
+            e.getPresentation().setIcon((Icon)AllIcons.Actions.class.getDeclaredField("MenuSaveall").get(null));
         } catch (Exception exception) {
             try {
-                e.getPresentation().setIcon(AllIcons.Actions.Menu_saveall);
+                e.getPresentation().setIcon((Icon)AllIcons.Actions.class.getDeclaredField("Menu_saveall").get(null));
             } catch (Exception ignored) {
             }
             log.error("update failed", exception);
