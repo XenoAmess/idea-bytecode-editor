@@ -1,4 +1,4 @@
-package com.github.pshirshov.conversion.jasmin; /***
+package com.github.pshirshov.conversion.impl.jasmin; /***
  * ASM: a very small and fast Java bytecode manipulation framework
  * Copyright (c) 2000-2011 INRIA, France Telecom
  * All rights reserved.
@@ -28,14 +28,26 @@ package com.github.pshirshov.conversion.jasmin; /***
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import com.xenoamess.org.objectweb.asm.v_9_2.*;
-import com.xenoamess.org.objectweb.asm.v_9_2.tree.*;
-import com.xenoamess.org.objectweb.asm.v_9_2.util.Printer;
-
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.xenoamess.org.objectweb.asm.v_9_2.ClassVisitor;
+import com.xenoamess.org.objectweb.asm.v_9_2.Label;
+import com.xenoamess.org.objectweb.asm.v_9_2.MethodVisitor;
+import com.xenoamess.org.objectweb.asm.v_9_2.Opcodes;
+import com.xenoamess.org.objectweb.asm.v_9_2.Type;
+import com.xenoamess.org.objectweb.asm.v_9_2.tree.AbstractInsnNode;
+import com.xenoamess.org.objectweb.asm.v_9_2.tree.AnnotationNode;
+import com.xenoamess.org.objectweb.asm.v_9_2.tree.ClassNode;
+import com.xenoamess.org.objectweb.asm.v_9_2.tree.FieldNode;
+import com.xenoamess.org.objectweb.asm.v_9_2.tree.InnerClassNode;
+import com.xenoamess.org.objectweb.asm.v_9_2.tree.LabelNode;
+import com.xenoamess.org.objectweb.asm.v_9_2.tree.LocalVariableNode;
+import com.xenoamess.org.objectweb.asm.v_9_2.tree.MethodNode;
+import com.xenoamess.org.objectweb.asm.v_9_2.tree.TryCatchBlockNode;
+import com.xenoamess.org.objectweb.asm.v_9_2.util.Printer;
 
 public class JasminifierClassAdapter extends ClassVisitor {
 

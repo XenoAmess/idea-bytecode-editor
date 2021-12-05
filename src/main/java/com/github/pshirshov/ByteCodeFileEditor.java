@@ -1,6 +1,16 @@
 package com.github.pshirshov;
 
-import com.github.pshirshov.util.BCEVirtualFile;
+import java.awt.BorderLayout;
+import java.beans.PropertyChangeListener;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+
+import com.github.pshirshov.action.ExportAssembledClassAction;
+import com.github.pshirshov.action.ExportAssembledClassToOriginalClassFileAction;
+import com.github.pshirshov.vfs.DisassembledVirtualFile;
 import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
 import com.intellij.execution.filters.LineNumbersMapping;
 import com.intellij.ide.structureView.StructureViewBuilder;
@@ -9,12 +19,21 @@ import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.editor.*;
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.EditorFactory;
+import com.intellij.openapi.editor.EditorSettings;
+import com.intellij.openapi.editor.ScrollType;
+import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.editor.highlighter.EditorHighlighterFactory;
 import com.intellij.openapi.editor.impl.EditorFactoryImpl;
-import com.intellij.openapi.fileEditor.*;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
+import com.intellij.openapi.fileEditor.FileEditor;
+import com.intellij.openapi.fileEditor.FileEditorLocation;
+import com.intellij.openapi.fileEditor.FileEditorState;
+import com.intellij.openapi.fileEditor.FileEditorStateLevel;
 import com.intellij.openapi.fileEditor.impl.text.TextEditorState;
 import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
@@ -25,21 +44,16 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiUtilCore;
 import com.intellij.util.DocumentUtil;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
-import java.awt.*;
-import java.beans.PropertyChangeListener;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
-public class ByteCodeEditor extends UserDataHolderBase implements FileEditor {
+public class ByteCodeFileEditor extends UserDataHolderBase implements FileEditor {
 
     private final JPanel component;
     private FileEditorState textEditorState = new TextEditorState();
-    private BCEVirtualFile file;
+    @Getter(onMethod_ = {@Override, @NotNull})
+    private final DisassembledVirtualFile file;
     private final Editor editor;
 
 
@@ -47,15 +61,19 @@ public class ByteCodeEditor extends UserDataHolderBase implements FileEditor {
         return editor.getDocument().getText();
     }
 
-
-    @Override
-    public BCEVirtualFile getFile() {
-        return file;
-    }
-
-
-    public ByteCodeEditor(Project project, BCEVirtualFile virtualFile) {
-        AnAction[] additionalActions = new AnAction[]{new AssembleAction(this, project, virtualFile)};
+    public ByteCodeFileEditor(Project project, DisassembledVirtualFile virtualFile) {
+        AnAction[] additionalActions = new AnAction[]{
+                new ExportAssembledClassToOriginalClassFileAction(
+                        this,
+                        project,
+                        virtualFile
+                ),
+                new ExportAssembledClassAction(
+                        this,
+                        project,
+                        virtualFile
+                )
+        };
 
         final JPanel panel = new JPanel(new BorderLayout());
 
@@ -91,7 +109,8 @@ public class ByteCodeEditor extends UserDataHolderBase implements FileEditor {
         for (final AnAction action : additionalActions) {
             actions.add(action);
         }
-        panel.add(actionManager.createActionToolbar(ActionPlaces.JAVADOC_TOOLBAR, actions, true).getComponent(),
+        panel.add(actionManager.createActionToolbar(ActionPlaces.JAVADOC_TOOLBAR, actions, true)
+                        .getComponent(),
                 BorderLayout.NORTH);
 
         this.component = panel;
@@ -100,7 +119,7 @@ public class ByteCodeEditor extends UserDataHolderBase implements FileEditor {
     }
 
 
-    public void update(BCEVirtualFile virtualFile) {
+    public void update(DisassembledVirtualFile virtualFile) {
         try {
             ApplicationManager.getApplication().runWriteAction(new Runnable() {
                 @Override
@@ -152,7 +171,11 @@ public class ByteCodeEditor extends UserDataHolderBase implements FileEditor {
                         lineNumber = mappedLine;
                     }
                 }
-                offset = this.file.getDisassembleStrategy().getLineOffset(bytecodeXmlString, document, lineNumber);
+                offset = this.file.getDisassembleStrategyEnum().getDisassembler().getLineOffset(
+                        bytecodeXmlString,
+                        document,
+                        lineNumber
+                );
             }
         }
 
