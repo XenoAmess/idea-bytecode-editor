@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.github.pshirshov.bytecodeeditor.xenoamess</id>
     <name>Bytecode Editor(XenoAmess TPM)</name>
-    <version>0.3.2</version>
+    <version>0.3.2-fx1</version>
     <vendor
             email="xenoamess@gmail.com"
             url="https://github.com/XenoAmess"
@@ -12,9 +12,9 @@
         <br/>
         <p><b>Third-party maintenance by XenoAmess.</b></p>
         <br/>
-        <p>This Third-party maintenance(TPM) here is forked from original [pshirshov/idea-bytecode-editor](https://github.com/pshirshov/idea-bytecode-editor)</p>
+        <p>This Third-party maintenance(TPM) here is forked from original <a href="https://github.com/pshirshov/idea-bytecode-editor">pshirshov/idea-bytecode-editor</a></p>
         <br/>
-        <p>Follows BSD 2-Clause "Simplified" License described in [license](https://github.com/XenoAmess/idea-bytecode-editor/blob/master/LICENSE)</p>
+        <p>Follows BSD 2-Clause "Simplified" License described in <a href="https://github.com/XenoAmess/idea-bytecode-editor/blob/master/LICENSE">license</a></p>
         <br/>
         <p>Sources can be found https://github.com/XenoAmess/idea-bytecode-editor/</p>
         <br/>
@@ -60,6 +60,10 @@
             <li>asm from 6 to 9.2</li>
         </ul>
         <ul>0.3.2
+            <li>clean up codes.</li>
+            <li>allow multiple AssembleStrategy.</li>
+        </ul>
+        <ul>0.3.2-fx1
             <li>clean up codes.</li>
             <li>allow multiple AssembleStrategy.</li>
         </ul>
