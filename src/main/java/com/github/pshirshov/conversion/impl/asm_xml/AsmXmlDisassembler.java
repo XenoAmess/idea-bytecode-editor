@@ -13,7 +13,8 @@ import javax.xml.transform.stream.StreamResult;
 import com.github.pshirshov.conversion.Disassembler;
 import com.github.pshirshov.util.IdeaUtils;
 import com.xenoamess.org.objectweb.asm.v_9_2.ClassReader;
-import com.xenoamess.org.objectweb.asm.v_9_2.xml.SAXClassAdapter;
+import com.xenoamess.org.objectweb.asm.v_9_2.Opcodes;
+import com.xenoamess.org.objectweb.asm.xml.SAXClassAdapter;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
@@ -36,7 +37,7 @@ public class AsmXmlDisassembler implements Disassembler {
             DOMImplementation impl = builder.getDOMImplementation();
             Document doc = impl.createDocument(null, null, null);
             SaxToDomHandler handlers = new SaxToDomHandler(doc);
-            classReader.accept(new SAXClassAdapter(handlers, true), ClassReader.EXPAND_FRAMES);
+            classReader.accept(new SAXClassAdapter(Opcodes.ASM9, handlers, true), ClassReader.EXPAND_FRAMES);
             return prettyPrint(doc);
 
         } catch (Throwable e) {

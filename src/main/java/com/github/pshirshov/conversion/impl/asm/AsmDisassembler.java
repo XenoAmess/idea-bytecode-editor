@@ -11,7 +11,8 @@ import com.xenoamess.org.objectweb.asm.v_9_2.util.Textifier;
 import com.xenoamess.org.objectweb.asm.v_9_2.util.TraceClassVisitor;
 
 @Deprecated
-public class AsmAssemblyDisassembleStrategy implements Disassembler {
+public class AsmDisassembler implements Disassembler {
+
     @Override
     public String disassemble(byte[] classfile) {
         final ClassReader classReader = new ClassReader(classfile);

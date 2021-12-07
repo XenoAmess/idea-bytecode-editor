@@ -4,9 +4,11 @@
 <br/>
 <p>This Third-party maintenance(TPM) here is forked from original <a href="https://github.com/pshirshov/idea-bytecode-editor">pshirshov/idea-bytecode-editor</a></p>
 <br/>
-<p>Follows BSD 2-Clause "Simplified" License described in <a href="https://github.com/XenoAmess/idea-bytecode-editor/blob/master/LICENSE">license</a></p>
+<p>Follows license described in <a href="https://github.com/XenoAmess/idea-bytecode-editor/blob/master/LICENSE">license</a></p>
 <br/>
 <p>Sources can be found https://github.com/XenoAmess/idea-bytecode-editor/</p>
+<br/>
+<p>Releases can be found https://plugins.jetbrains.com/plugin/18144-bytecode-editor-xenoamess-tpm-</p>
 <br/>
 <p>Provides <i>View | Edit Bytecode</i> action for those who want to edit JVM class bytecodes.</p>
 <p>

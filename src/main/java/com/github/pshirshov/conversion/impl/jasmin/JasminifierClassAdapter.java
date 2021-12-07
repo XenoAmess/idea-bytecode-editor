@@ -67,7 +67,7 @@ public class JasminifierClassAdapter extends ClassVisitor {
      * @param pw the print writer to be used to print the class.
      */
     public JasminifierClassAdapter(final PrintWriter pw) {
-        super(Opcodes.ASM5, new ClassNode());
+        super(Opcodes.ASM9, new ClassNode());
         this.pw = pw;
         labelNames = new HashMap<Label, String>();
     }
