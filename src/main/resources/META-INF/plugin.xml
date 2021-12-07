@@ -71,6 +71,10 @@
         <ul>0.3.3
             <li>invoke api version to ASM9</li>
         </ul>
+        <ul>0.4.0
+            <li>delete save and export icon for DisassembleStrategyEnum who have no Assembler</li>
+            <li>add ShowByteCodeAsmAction</li>
+        </ul>
     ]]></change-notes>
     <idea-version since-build="181.5540.23"/>
 

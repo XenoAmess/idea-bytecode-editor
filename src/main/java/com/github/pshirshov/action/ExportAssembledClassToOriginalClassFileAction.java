@@ -19,7 +19,7 @@ public class ExportAssembledClassToOriginalClassFileAction extends ExportAssembl
 
     @Override
     public void update(AnActionEvent e) {
-        if (this.getVirtualFile().getDisassembleStrategyEnum().getAssembler() == null) {
+        if (this.getVirtualFile().getDisassembleStrategy().getAssembler() == null) {
             e.getPresentation().setVisible(false);
             return;
         }

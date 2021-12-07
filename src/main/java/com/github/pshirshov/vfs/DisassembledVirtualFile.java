@@ -1,6 +1,6 @@
 package com.github.pshirshov.vfs;
 
-import com.github.pshirshov.conversion.DisassembleStrategyEnum;
+import com.github.pshirshov.conversion.DisassembleStrategy;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
@@ -24,7 +24,7 @@ public class DisassembledVirtualFile extends BinaryLightVirtualFile {
     @Getter
     @Setter
     @NotNull
-    private DisassembleStrategyEnum disassembleStrategyEnum;
+    private DisassembleStrategy disassembleStrategy;
 
     public DisassembledVirtualFile(
             String name,
@@ -32,12 +32,12 @@ public class DisassembledVirtualFile extends BinaryLightVirtualFile {
             byte[] content,
             @NotNull PsiElement element,
             @NotNull VirtualFile originalClassVirtualFile,
-            @NotNull DisassembleStrategyEnum disassembleStrategyEnum
+            @NotNull DisassembleStrategy disassembleStrategy
     ) {
         super(name, fileType, content);
         this.element = element;
         this.originalClassVirtualFile = originalClassVirtualFile;
-        this.disassembleStrategyEnum = disassembleStrategyEnum;
+        this.disassembleStrategy = disassembleStrategy;
     }
 
 
