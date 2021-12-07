@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.nio.file.Paths;
 
 import com.github.pshirshov.ByteCodeFileEditor;
+import com.github.pshirshov.conversion.Assembler;
 import com.github.pshirshov.util.IdeaUtils;
 import com.github.pshirshov.vfs.DisassembledVirtualFile;
 import com.intellij.icons.AllIcons;
@@ -45,6 +46,10 @@ public class ExportAssembledClassAction extends AnAction {
 
     @Override
     public void update(AnActionEvent e) {
+        if (this.getVirtualFile().getDisassembleStrategyEnum().getAssembler() == null) {
+            e.getPresentation().setVisible(false);
+            return;
+        }
         e.getPresentation().setVisible(true);
         try {
             e.getPresentation().setIcon(AllIcons.ToolbarDecorator.Export);
@@ -75,7 +80,11 @@ public class ExportAssembledClassAction extends AnAction {
                                 final InputStream inputStream = new ByteArrayInputStream(virtualFile.getContent());
                                 final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                         ) {
-                            virtualFile.getDisassembleStrategyEnum().getAssembler().assemble(
+                            Assembler assembler = virtualFile.getDisassembleStrategyEnum().getAssembler();
+                            if (assembler == null) {
+                                return;
+                            }
+                            assembler.assemble(
                                     inputStream,
                                     byteArrayOutputStream
                             );

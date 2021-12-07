@@ -2,7 +2,6 @@ package com.github.pshirshov.action;
 
 import java.io.IOException;
 import java.io.OutputStream;
-
 import javax.swing.Icon;
 
 import com.github.pshirshov.ByteCodeFileEditor;
@@ -20,12 +19,16 @@ public class ExportAssembledClassToOriginalClassFileAction extends ExportAssembl
 
     @Override
     public void update(AnActionEvent e) {
+        if (this.getVirtualFile().getDisassembleStrategyEnum().getAssembler() == null) {
+            e.getPresentation().setVisible(false);
+            return;
+        }
         e.getPresentation().setVisible(true);
         try {
-            e.getPresentation().setIcon((Icon)AllIcons.Actions.class.getDeclaredField("MenuSaveall").get(null));
+            e.getPresentation().setIcon((Icon) AllIcons.Actions.class.getDeclaredField("MenuSaveall").get(null));
         } catch (Exception exception) {
             try {
-                e.getPresentation().setIcon((Icon)AllIcons.Actions.class.getDeclaredField("Menu_saveall").get(null));
+                e.getPresentation().setIcon((Icon) AllIcons.Actions.class.getDeclaredField("Menu_saveall").get(null));
             } catch (Exception ignored) {
             }
             log.error("update failed", exception);
