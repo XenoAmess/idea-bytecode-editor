@@ -19,7 +19,7 @@ import java.util.Objects;
 
 import com.github.pshirshov.ByteCodeFileEditor;
 import com.github.pshirshov.conversion.BytecodeConverter;
-import com.github.pshirshov.conversion.DisassembleStrategyEnum;
+import com.github.pshirshov.conversion.DisassembleStrategy;
 import com.github.pshirshov.util.PsiUtils;
 import com.github.pshirshov.vfs.DisassembledVirtualFile;
 import com.intellij.icons.AllIcons;
@@ -56,7 +56,7 @@ import org.jetbrains.annotations.NotNull;
 public abstract class AbstractShowByteCodeAction extends AnAction {
 
     @NotNull
-    public abstract DisassembleStrategyEnum getDisassembleStrategyEnum();
+    public abstract DisassembleStrategy getDisassembleStrategy();
 
     @Override
     public void update(AnActionEvent e) {
@@ -118,7 +118,7 @@ public abstract class AbstractShowByteCodeAction extends AnAction {
                         @Override
                         public String compute() {
                             return new BytecodeConverter(
-                                    AbstractShowByteCodeAction.this.getDisassembleStrategyEnum()
+                                    AbstractShowByteCodeAction.this.getDisassembleStrategy()
                             ).getByteCode(psiElement);
                         }
                     });
@@ -158,7 +158,7 @@ public abstract class AbstractShowByteCodeAction extends AnAction {
                         myByteCode.getBytes(),
                         psiElement,
                         virtualFile,
-                        AbstractShowByteCodeAction.this.getDisassembleStrategyEnum()
+                        AbstractShowByteCodeAction.this.getDisassembleStrategy()
                 );
 
                 for (FileEditor fileEditor : FileEditorManager.getInstance(project).getAllEditors()) {
@@ -195,8 +195,8 @@ public abstract class AbstractShowByteCodeAction extends AnAction {
             DisassembledVirtualFile existedDisassembledVirtualFile
     ) {
         return Objects.equals(
-                existedDisassembledVirtualFile.getDisassembleStrategyEnum(),
-                disassembledVirtualFile.getDisassembleStrategyEnum()
+                existedDisassembledVirtualFile.getDisassembleStrategy(),
+                disassembledVirtualFile.getDisassembleStrategy()
         )
                 &&
                 existedDisassembledVirtualFile.getPath().equals(disassembledVirtualFile.getPath());

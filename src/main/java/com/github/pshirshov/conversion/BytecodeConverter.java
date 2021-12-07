@@ -48,7 +48,7 @@ import org.jetbrains.annotations.Nullable;
 @AllArgsConstructor
 public class BytecodeConverter {
 
-    private final DisassembleStrategyEnum disassembleStrategyEnum;
+    private final DisassembleStrategy disassembleStrategy;
 
     @Nullable
     private String tryGetByteCodeNew(@NotNull PsiFile containingFile) {
@@ -166,7 +166,7 @@ public class BytecodeConverter {
 
     private String processClassFile(byte[] bytes) {
         try {
-            return disassembleStrategyEnum.getDisassembler().disassemble(bytes);
+            return disassembleStrategy.getDisassembler().disassemble(bytes);
         } catch (Throwable e) {
             IdeaUtils.showErrorNotification("Disassembler failed", e);
             return null;

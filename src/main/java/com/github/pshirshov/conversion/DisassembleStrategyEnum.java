@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @AllArgsConstructor
-public enum DisassembleStrategyEnum {
+public enum DisassembleStrategyEnum implements DisassembleStrategy {
 
     /**
      * jasmin

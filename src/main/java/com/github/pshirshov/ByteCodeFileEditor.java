@@ -171,7 +171,7 @@ public class ByteCodeFileEditor extends UserDataHolderBase implements FileEditor
                         lineNumber = mappedLine;
                     }
                 }
-                offset = this.file.getDisassembleStrategyEnum().getDisassembler().getLineOffset(
+                offset = this.file.getDisassembleStrategy().getDisassembler().getLineOffset(
                         bytecodeXmlString,
                         document,
                         lineNumber

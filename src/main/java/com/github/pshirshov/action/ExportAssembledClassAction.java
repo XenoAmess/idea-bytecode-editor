@@ -46,7 +46,7 @@ public class ExportAssembledClassAction extends AnAction {
 
     @Override
     public void update(AnActionEvent e) {
-        if (this.getVirtualFile().getDisassembleStrategyEnum().getAssembler() == null) {
+        if (this.getVirtualFile().getDisassembleStrategy().getAssembler() == null) {
             e.getPresentation().setVisible(false);
             return;
         }
@@ -80,7 +80,7 @@ public class ExportAssembledClassAction extends AnAction {
                                 final InputStream inputStream = new ByteArrayInputStream(virtualFile.getContent());
                                 final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                         ) {
-                            Assembler assembler = virtualFile.getDisassembleStrategyEnum().getAssembler();
+                            Assembler assembler = virtualFile.getDisassembleStrategy().getAssembler();
                             if (assembler == null) {
                                 return;
                             }
