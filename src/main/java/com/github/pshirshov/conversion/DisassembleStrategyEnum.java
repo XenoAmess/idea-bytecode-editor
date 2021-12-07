@@ -1,5 +1,6 @@
 package com.github.pshirshov.conversion;
 
+import com.github.pshirshov.conversion.impl.asm.AsmDisassembler;
 import com.github.pshirshov.conversion.impl.asm_xml.AsmXmlAssembler;
 import com.github.pshirshov.conversion.impl.asm_xml.AsmXmlDisassembler;
 import com.github.pshirshov.conversion.impl.jasmin.JasminDisassembler;
@@ -18,6 +19,15 @@ public enum DisassembleStrategyEnum {
             DisassembleStrategyConstant.STRING_JASMIN,
             null,
             JasminDisassembler.INSTANCE
+    ),
+
+    /**
+     * asm
+     */
+    ASM(
+            DisassembleStrategyConstant.STRING_ASM,
+            null,
+            AsmDisassembler.INSTANCE
     ),
 
     /**

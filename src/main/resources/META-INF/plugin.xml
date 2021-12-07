@@ -85,6 +85,9 @@
             <action id="ShowByteCodeAsmXmlAction" class="com.github.pshirshov.action.impl.ShowByteCodeAsmXmlAction"
                     text="Edit Bytecode As Asm Xml">
             </action>
+            <action id="ShowByteCodeAsmAction" class="com.github.pshirshov.action.impl.ShowByteCodeAsmAction"
+                    text="Edit Bytecode As Asm">
+            </action>
             <action id="ShowByteCodeJasminAction" class="com.github.pshirshov.action.impl.ShowByteCodeJasminAction"
                     text="Edit Bytecode As Jasmin(Read Only)">
             </action>
