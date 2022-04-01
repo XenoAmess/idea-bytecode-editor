@@ -163,7 +163,6 @@ public class BytecodeConverter {
         return null;
     }
 
-
     private String processClassFile(byte[] bytes) {
         try {
             return disassembleStrategy.getDisassembler().disassemble(bytes);
