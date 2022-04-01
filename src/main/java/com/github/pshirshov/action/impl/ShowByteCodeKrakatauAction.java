@@ -9,9 +9,9 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author XenoAmess
  */
-public class ShowByteCodeJasminAction extends AbstractShowByteCodeAction {
+public class ShowByteCodeKrakatauAction extends AbstractShowByteCodeAction {
 
     @Getter(onMethod_ = {@Override, @NotNull})
-    private final DisassembleStrategy disassembleStrategy = DisassembleStrategyEnum.JASMIN;
+    private final DisassembleStrategy disassembleStrategy = DisassembleStrategyEnum.KRAKATAU;
 
 }
