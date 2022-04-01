@@ -70,3 +70,5 @@ project/boot/
 hs_err_pid*
 
 .gradle/
+
+.jython_cache

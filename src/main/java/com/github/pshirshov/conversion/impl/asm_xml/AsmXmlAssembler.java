@@ -9,7 +9,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import com.github.pshirshov.conversion.Assembler;
 import com.xenoamess.org.objectweb.asm.v_9_2.ClassWriter;
-import com.xenoamess.org.objectweb.asm.v_9_2.xml.ASMContentHandler;
+import com.xenoamess.org.objectweb.asm.xml.ASMContentHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.xml.sax.SAXException;

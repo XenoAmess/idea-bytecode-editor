@@ -9,6 +9,7 @@ import com.github.pshirshov.conversion.Assembler;
 import jasmin.Main;
 import org.jetbrains.annotations.NotNull;
 
+@Deprecated
 public class JasminAssembler implements Assembler {
 
     public static final JasminAssembler INSTANCE = new JasminAssembler();

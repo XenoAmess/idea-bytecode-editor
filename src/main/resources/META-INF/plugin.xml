@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.github.pshirshov.bytecodeeditor.xenoamess</id>
     <name>Bytecode Editor(XenoAmess TPM)</name>
-    <version>0.3.2-fx1</version>
+    <version>0.3.4-SNAPSHOT</version>
     <vendor
             email="xenoamess@gmail.com"
             url="https://github.com/XenoAmess"
@@ -14,9 +14,11 @@
         <br/>
         <p>This Third-party maintenance(TPM) here is forked from original <a href="https://github.com/pshirshov/idea-bytecode-editor">pshirshov/idea-bytecode-editor</a></p>
         <br/>
-        <p>Follows BSD 2-Clause "Simplified" License described in <a href="https://github.com/XenoAmess/idea-bytecode-editor/blob/master/LICENSE">license</a></p>
+        <p>Follows license described in <a href="https://github.com/XenoAmess/idea-bytecode-editor/blob/master/LICENSE">license</a></p>
         <br/>
         <p>Sources can be found https://github.com/XenoAmess/idea-bytecode-editor/</p>
+        <br/>
+        <p>Releases can be found https://plugins.jetbrains.com/plugin/18144-bytecode-editor-xenoamess-tpm-</p>
         <br/>
         <p>Provides <i>View | Edit Bytecode</i> action for those who want to edit JVM class bytecodes.</p>
         <p>
@@ -64,8 +66,14 @@
             <li>allow multiple AssembleStrategy.</li>
         </ul>
         <ul>0.3.2-fx1
-            <li>clean up codes.</li>
-            <li>allow multiple AssembleStrategy.</li>
+            <li>clean up documents.</li>
+        </ul>
+        <ul>0.3.3
+            <li>invoke api version to ASM9</li>
+        </ul>
+        <ul>0.4.0
+            <li>delete save and export icon for DisassembleStrategyEnum who have no Assembler</li>
+            <li>add ShowByteCodeAsmAction</li>
         </ul>
     ]]></change-notes>
     <idea-version since-build="181.5540.23"/>
@@ -81,8 +89,14 @@
             <action id="ShowByteCodeAsmXmlAction" class="com.github.pshirshov.action.impl.ShowByteCodeAsmXmlAction"
                     text="Edit Bytecode As Asm Xml">
             </action>
+            <action id="ShowByteCodeAsmAction" class="com.github.pshirshov.action.impl.ShowByteCodeAsmAction"
+                    text="Edit Bytecode As Asm">
+            </action>
             <action id="ShowByteCodeJasminAction" class="com.github.pshirshov.action.impl.ShowByteCodeJasminAction"
                     text="Edit Bytecode As Jasmin(Read Only)">
+            </action>
+            <action id="ShowByteCodeKrakatauAction" class="com.github.pshirshov.action.impl.ShowByteCodeKrakatauAction"
+                    text="Edit Bytecode As Krakatau">
             </action>
             <add-to-group group-id="QuickActions" anchor="after" relative-to-action="QuickJavaDoc"/>
         </group>
