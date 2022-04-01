@@ -26,25 +26,16 @@ public class AsmXmlDisassembler implements Disassembler {
     }
 
     @Override
-    public String disassemble(byte[] classfile) {
+    public String disassemble(byte[] classfile) throws Exception {
         final ClassReader classReader = new ClassReader(classfile);
-
-
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setNamespaceAware(true);
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            DOMImplementation impl = builder.getDOMImplementation();
-            Document doc = impl.createDocument(null, null, null);
-            SaxToDomHandler handlers = new SaxToDomHandler(doc);
-            classReader.accept(new SAXClassAdapter(Opcodes.ASM9, handlers, true), ClassReader.EXPAND_FRAMES);
-            return prettyPrint(doc);
-
-        } catch (Throwable e) {
-            throw new RuntimeException(e);
-        }
-
-
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        DOMImplementation impl = builder.getDOMImplementation();
+        Document doc = impl.createDocument(null, null, null);
+        SaxToDomHandler handlers = new SaxToDomHandler(doc);
+        classReader.accept(new SAXClassAdapter(Opcodes.ASM9, handlers, true), ClassReader.EXPAND_FRAMES);
+        return prettyPrint(doc);
     }
 
 

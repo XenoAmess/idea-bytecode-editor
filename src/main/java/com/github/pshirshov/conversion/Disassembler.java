@@ -4,7 +4,7 @@ import com.intellij.openapi.editor.Document;
 
 public interface Disassembler {
 
-    String disassemble(byte[] classfile);
+    String disassemble(byte[] classfile) throws Exception;
 
     /**
      * get the offset that, in idea ide, where the cursor should move to, after the string change.

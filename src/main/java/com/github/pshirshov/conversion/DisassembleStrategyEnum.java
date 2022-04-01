@@ -4,6 +4,8 @@ import com.github.pshirshov.conversion.impl.asm.AsmDisassembler;
 import com.github.pshirshov.conversion.impl.asm_xml.AsmXmlAssembler;
 import com.github.pshirshov.conversion.impl.asm_xml.AsmXmlDisassembler;
 import com.github.pshirshov.conversion.impl.jasmin.JasminDisassembler;
+import com.github.pshirshov.conversion.impl.krakatau.KrakatauAssembler;
+import com.github.pshirshov.conversion.impl.krakatau.KrakatauDisassembler;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
@@ -37,6 +39,15 @@ public enum DisassembleStrategyEnum implements DisassembleStrategy {
             DisassembleStrategyConstant.STRING_ASM_XML,
             AsmXmlAssembler.INSTANCE,
             AsmXmlDisassembler.INSTANCE
+    ),
+
+    /**
+     * krakatau
+     */
+    KRAKATAU(
+            DisassembleStrategyConstant.STRING_KRAKATAU,
+            KrakatauAssembler.INSTANCE,
+            KrakatauDisassembler.INSTANCE
     );
 
     @Getter

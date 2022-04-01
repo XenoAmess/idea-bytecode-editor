@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.github.pshirshov.bytecodeeditor.xenoamess</id>
     <name>Bytecode Editor(XenoAmess TPM)</name>
-    <version>0.3.3</version>
+    <version>0.3.4-SNAPSHOT</version>
     <vendor
             email="xenoamess@gmail.com"
             url="https://github.com/XenoAmess"
@@ -94,6 +94,9 @@
             </action>
             <action id="ShowByteCodeJasminAction" class="com.github.pshirshov.action.impl.ShowByteCodeJasminAction"
                     text="Edit Bytecode As Jasmin(Read Only)">
+            </action>
+            <action id="ShowByteCodeKrakatauAction" class="com.github.pshirshov.action.impl.ShowByteCodeKrakatauAction"
+                    text="Edit Bytecode As Krakatau">
             </action>
             <add-to-group group-id="QuickActions" anchor="after" relative-to-action="QuickJavaDoc"/>
         </group>
