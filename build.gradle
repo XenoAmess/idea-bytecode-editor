@@ -45,7 +45,7 @@ dependencies {
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
     implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
     implementation group: 'org.apache.commons', name: 'commons-vfs2', version: '2.9.0'
-    implementation group: 'org.python', name: 'jython', version: '2.7.2'
+    implementation group: 'org.python', name: 'jython', version: '2.7.3'
 
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
