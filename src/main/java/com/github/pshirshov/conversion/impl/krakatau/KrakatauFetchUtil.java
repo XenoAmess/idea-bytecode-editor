@@ -1,22 +1,25 @@
 package com.github.pshirshov.conversion.impl.krakatau;
 
+import com.intellij.openapi.application.PathManager;
+import com.intellij.util.download.DownloadableFileDescription;
+import com.intellij.util.download.DownloadableFileService;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Collections;
 
-import com.intellij.openapi.application.PathManager;
-import com.intellij.util.download.DownloadableFileDescription;
-import com.intellij.util.download.DownloadableFileService;
-import org.jetbrains.annotations.NotNull;
-import org.python.util.PythonInterpreter;
-
 public class KrakatauFetchUtil {
 
-    public static String KRAKATAU_JAVA_WRAPPER_VERSION = "0.0.1";
+    public static String KRAKATAU_JAVA_WRAPPER_VERSION = "0.0.4-SNAPSHOT";
 
     public static volatile Class<?> KRAKATAU_UTIL_CLASS;
+
+    private static final String MAVEN_STABLE_REPO_HEADER = "https://repo1.maven.org/maven2/com/xenoamess/krakatau_java_wrapper/";
+
+    private static final String MAVEN_SNAPSHOT_REPO_HEADER = "https://oss.sonatype.org/content/repositories/snapshots/com/xenoamess/krakatau_java_wrapper/";
 
     @NotNull
     public static synchronized Class<?> assureKrakatauDownloaded() throws MalformedURLException,
@@ -26,13 +29,13 @@ public class KrakatauFetchUtil {
         }
         File file = new File(
                 PathManager.getSystemPath(),
-                "download-cache/krakatau_java_wrapper-" + KRAKATAU_JAVA_WRAPPER_VERSION + ".jar"
+                "download-cache/idea-bytecode-editor/krakatau_java_wrapper-" + KRAKATAU_JAVA_WRAPPER_VERSION + ".jar"
         );
         if (file.exists()) {
             return assertKrakatauLoaded(file);
         }
         String downloadUrlString =
-                "https://repo1.maven.org/maven2/com/xenoamess/krakatau_java_wrapper/"
+                KRAKATAU_JAVA_WRAPPER_VERSION.endsWith("-SNAPSHOT") ? MAVEN_SNAPSHOT_REPO_HEADER : MAVEN_STABLE_REPO_HEADER
                         + KRAKATAU_JAVA_WRAPPER_VERSION
                         + "/krakatau_java_wrapper-"
                         + KRAKATAU_JAVA_WRAPPER_VERSION
@@ -47,7 +50,7 @@ public class KrakatauFetchUtil {
                 Collections.singletonList(description),
                 "krakatau_java_wrapper-" + KRAKATAU_JAVA_WRAPPER_VERSION + ".jar"
         ).downloadFilesWithProgress(
-                PathManager.getSystemPath() + "/download-cache",
+                PathManager.getSystemPath() + "/download-cache/idea-bytecode-editor",
                 null,
                 null
         );
@@ -62,7 +65,7 @@ public class KrakatauFetchUtil {
         }
         URLClassLoader urlClassLoader = new URLClassLoader(
                 new URL[]{
-//                        file.getAbsoluteFile().toURI().toURL()
+                        file.getAbsoluteFile().toURI().toURL()
                 },
                 KrakatauFetchUtil.class.getClassLoader()
         );
@@ -71,12 +74,6 @@ public class KrakatauFetchUtil {
                 true,
                 urlClassLoader
         );
-        try (
-                PythonInterpreter pythonInterpreter = new PythonInterpreter()
-        ) {
-            pythonInterpreter.exec("import sys");
-            pythonInterpreter.exec("sys.path.append(\"" + file.getAbsolutePath().replace("\\\\", "/") + "\")");
-        }
         return KRAKATAU_UTIL_CLASS;
     }
 
