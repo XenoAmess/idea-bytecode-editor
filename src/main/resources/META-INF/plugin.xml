@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.github.pshirshov.bytecodeeditor.xenoamess</id>
     <name>Bytecode Editor(XenoAmess TPM)</name>
-    <version>0.3.4-SNAPSHOT</version>
+    <version>0.4.0</version>
     <vendor
             email="xenoamess@gmail.com"
             url="https://github.com/XenoAmess"
@@ -74,9 +74,10 @@
         <ul>0.4.0
             <li>delete save and export icon for DisassembleStrategyEnum who have no Assembler</li>
             <li>add ShowByteCodeAsmAction</li>
+            <li>add krakatau2 support</li>
         </ul>
     ]]></change-notes>
-    <idea-version since-build="181.5540.23"/>
+    <idea-version since-build="2022"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <projectService serviceInterface="com.github.pshirshov.conversion.BytecodeConverter"
