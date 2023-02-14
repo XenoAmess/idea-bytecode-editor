@@ -1,11 +1,10 @@
 package com.github.pshirshov.conversion.impl.krakatau;
 
+import com.github.pshirshov.conversion.Disassembler;
+
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
-import com.github.pshirshov.conversion.Disassembler;
-import com.xenoamess.krakatau_java_wrapper.util.KrakatauUtil;
 
 public class KrakatauDisassembler implements Disassembler {
 
@@ -26,8 +25,7 @@ public class KrakatauDisassembler implements Disassembler {
                 "disassemble",
                 byte[].class
         );
-        return KrakatauUtil.disassemble(classfile);
-//        return (String) method.invoke(null, (Object) classfile);
+        return (String) method.invoke(null, (Object) classfile);
     }
 
 }

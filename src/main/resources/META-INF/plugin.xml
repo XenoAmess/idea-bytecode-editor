@@ -76,7 +76,7 @@
             <li>add ShowByteCodeAsmAction</li>
         </ul>
     ]]></change-notes>
-    <idea-version since-build="181.5540.23"/>
+    <idea-version since-build="2022"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <projectService serviceInterface="com.github.pshirshov.conversion.BytecodeConverter"
