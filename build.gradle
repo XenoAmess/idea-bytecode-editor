@@ -42,7 +42,7 @@ dependencies {
     implementation group: 'com.xenoamess.shades', name: 'org.ow2.asm.asm-all.v_9_2', version: '9.2'
 
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.13.0'
-    implementation group: 'commons-io', name: 'commons-io', version: '2.14.0'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.15.0'
     implementation group: 'org.apache.commons', name: 'commons-vfs2', version: '2.9.0'
 
     compileOnly 'org.projectlombok:lombok:1.18.30'
