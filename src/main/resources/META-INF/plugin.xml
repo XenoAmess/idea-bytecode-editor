@@ -77,7 +77,7 @@
             <li>add krakatau2 support</li>
         </ul>
     ]]></change-notes>
-    <idea-version since-build="2022"/>
+    <idea-version since-build="231.8109.175"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <projectService serviceInterface="com.github.pshirshov.conversion.BytecodeConverter"
