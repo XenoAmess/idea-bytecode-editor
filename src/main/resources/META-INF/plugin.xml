@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.github.pshirshov.bytecodeeditor.xenoamess</id>
     <name>Bytecode Editor(XenoAmess TPM)</name>
-    <version>0.4.0</version>
+    <version>0.5.0</version>
     <vendor
             email="xenoamess@gmail.com"
             url="https://github.com/XenoAmess"
@@ -76,17 +76,21 @@
             <li>add ShowByteCodeAsmAction</li>
             <li>add krakatau2 support</li>
         </ul>
+        <ul>0.5.0
+            <li>update to since-build="2023.1"</li>
+            <li>minor code refines</li>
+            <li>add runReadAction, fix read failure</li>
+        </ul>
     ]]></change-notes>
-    <idea-version since-build="2022"/>
+    <idea-version since-build="231.8109.175"/>
 
     <extensions defaultExtensionNs="com.intellij">
-        <projectService serviceInterface="com.github.pshirshov.conversion.BytecodeConverter"
-                        serviceImplementation="com.github.pshirshov.conversion.BytecodeConverter"/>
+        <projectService serviceImplementation="com.github.pshirshov.conversion.BytecodeConverter"/>
         <fileEditorProvider implementation="com.github.pshirshov.EditorProvider"/>
     </extensions>
 
     <actions>
-        <group>
+        <group id="Bytecode Editor(XenoAmess TPM)">
             <action id="ShowByteCodeAsmXmlAction" class="com.github.pshirshov.action.impl.ShowByteCodeAsmXmlAction"
                     text="Edit Bytecode As Asm Xml">
             </action>
