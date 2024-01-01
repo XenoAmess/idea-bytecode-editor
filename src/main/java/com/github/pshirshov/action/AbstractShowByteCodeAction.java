@@ -47,6 +47,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.SmartPointerManager;
 import com.intellij.psi.SmartPsiElementPointer;
 import com.intellij.psi.util.PsiUtilCore;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -132,7 +133,7 @@ public abstract class AbstractShowByteCodeAction extends AnAction {
                     return;
                 }
 
-                if ((myErrorMessage != null) && (myTitle != null)) {
+                if ((myErrorMessage != null) && StringUtils.isNotBlank(getTitle())) {
                     Messages.showWarningDialog(project, myErrorMessage, myErrorTitle);
                     return;
                 }
