@@ -76,6 +76,11 @@
             <li>add ShowByteCodeAsmAction</li>
             <li>add krakatau2 support</li>
         </ul>
+        <ul>0.5.0
+            <li>update to since-build="2023.1"</li>
+            <li>minor code refines</li>
+            <li>add runReadAction, fix read failure</li>
+        </ul>
     ]]></change-notes>
     <idea-version since-build="231.8109.175"/>
 
