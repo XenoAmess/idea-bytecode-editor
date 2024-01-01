@@ -701,7 +701,7 @@ public class JasminifierClassAdapter extends ClassVisitor {
             pwprint("[F = ");
             float[] v = (float[]) value;
             for (int i = 0; i < v.length; i++) {
-                print(new Float(v[i]));
+                print(v[i]);
                 pwprint(' ');
             }
             pwprintln();
@@ -709,7 +709,7 @@ public class JasminifierClassAdapter extends ClassVisitor {
             pwprint("[D = ");
             double[] v = (double[]) value;
             for (int i = 0; i < v.length; i++) {
-                print(new Double(v[i]));
+                print(v[i]);
                 pwprint(' ');
             }
             pwprintln();
@@ -767,7 +767,7 @@ public class JasminifierClassAdapter extends ClassVisitor {
             pwprintln(((Boolean) value).booleanValue() ? 1 : 0);
         } else if (value instanceof Character) {
             pwprint("C = ");
-            pwprintln(new Integer(((Character) value).charValue()));
+            pwprintln((int) ((Character) value).charValue());
         } else if (value instanceof Short) {
             pwprint("S = ");
             pwprintln(((Short) value).intValue());
@@ -805,9 +805,9 @@ public class JasminifierClassAdapter extends ClassVisitor {
         } else if (value instanceof Byte) {
             pwprint(((Byte) value).intValue());
         } else if (value instanceof Boolean) {
-            pwprint(((Boolean) value).booleanValue() ? 1 : 0);
+            pwprint((Boolean) value ? 1 : 0);
         } else if (value instanceof Character) {
-            pwprint(new Integer(((Character) value).charValue()));
+            pwprint((int) ((Character) value).charValue());
         } else if (value instanceof Short) {
             pwprint(((Short) value).intValue());
         } else if (value instanceof Type) {
