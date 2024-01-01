@@ -85,13 +85,12 @@
     <idea-version since-build="231.8109.175"/>
 
     <extensions defaultExtensionNs="com.intellij">
-        <projectService serviceInterface="com.github.pshirshov.conversion.BytecodeConverter"
-                        serviceImplementation="com.github.pshirshov.conversion.BytecodeConverter"/>
+        <projectService serviceImplementation="com.github.pshirshov.conversion.BytecodeConverter"/>
         <fileEditorProvider implementation="com.github.pshirshov.EditorProvider"/>
     </extensions>
 
     <actions>
-        <group>
+        <group id="Bytecode Editor(XenoAmess TPM)">
             <action id="ShowByteCodeAsmXmlAction" class="com.github.pshirshov.action.impl.ShowByteCodeAsmXmlAction"
                     text="Edit Bytecode As Asm Xml">
             </action>
