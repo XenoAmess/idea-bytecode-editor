@@ -109,21 +109,27 @@ public abstract class AbstractShowByteCodeAction extends AnAction {
 
             @Override
             public void run(@NotNull ProgressIndicator indicator) {
-                if (ProjectRootManager.getInstance(project).getFileIndex()
-                        .isInContent(virtualFile) && isMarkedForCompilation(project, virtualFile)) {
-                    myErrorMessage = "Unable to show bytecode for '" + psiElementTitle + "'. Class file does not " +
-                            "exist or is out-of-date.";
-                    myErrorTitle = "Class File Out-Of-Date";
-                } else {
-                    myByteCode = ApplicationManager.getApplication().runReadAction(new Computable<String>() {
-                        @Override
-                        public String compute() {
-                            return new BytecodeConverter(
-                                    AbstractShowByteCodeAction.this.getDisassembleStrategy()
-                            ).getByteCode(psiElement);
+                ApplicationManager.getApplication().runReadAction(new Computable<String>() {
+                    @Override
+                    public String compute() {
+                        if (ProjectRootManager.getInstance(project).getFileIndex()
+                                .isInContent(virtualFile) && isMarkedForCompilation(project, virtualFile)) {
+                            myErrorMessage = "Unable to show bytecode for '" + psiElementTitle + "'. Class file does not " +
+                                    "exist or is out-of-date.";
+                            myErrorTitle = "Class File Out-Of-Date";
+                        } else {
+                            myByteCode = ApplicationManager.getApplication().runReadAction(new Computable<String>() {
+                                @Override
+                                public String compute() {
+                                    return new BytecodeConverter(
+                                            AbstractShowByteCodeAction.this.getDisassembleStrategy()
+                                    ).getByteCode(psiElement);
+                                }
+                            });
                         }
-                    });
-                }
+                        return myByteCode;
+                    }
+                });
             }
 
 
