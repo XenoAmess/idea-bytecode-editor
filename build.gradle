@@ -43,7 +43,7 @@ dependencies {
     implementation group: 'ca.mcgill.sable', name: 'jasmin', version: '3.0.3'
     implementation group: 'com.xenoamess.shades', name: 'org.ow2.asm.asm-all.v_9_2', version: '9.2'
 
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.15.0'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.16.0'
     implementation group: 'commons-io', name: 'commons-io', version: '2.16.1'
     implementation group: 'org.apache.commons', name: 'commons-vfs2', version: '2.9.0'
     implementation 'com.squareup.okio:okio:3.9.0'
