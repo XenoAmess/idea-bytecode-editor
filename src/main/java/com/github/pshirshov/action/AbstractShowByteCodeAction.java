@@ -24,6 +24,7 @@ import com.github.pshirshov.util.PsiUtils;
 import com.github.pshirshov.vfs.DisassembledVirtualFile;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.highlighter.JavaClassFileType;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -158,10 +159,10 @@ public abstract class AbstractShowByteCodeAction extends AnAction {
 
                 FileEditorManager manager = FileEditorManager.getInstance(project);
 
-                final String filename = '/' + psiClass.getQualifiedName().replace('.', '/') + ".bc";
+                final String filename = '/' + psiClass.getQualifiedName().replace('.', '/') + "." + getDisassembleStrategy().getFileNameSuffix();
                 DisassembledVirtualFile disassembledVirtualFile = new DisassembledVirtualFile(
                         filename,
-                        JavaClassFileType.INSTANCE,
+                        getDisassembleStrategy().getFileType(),
                         myByteCode.getBytes(),
                         psiElement,
                         virtualFile,
@@ -213,6 +214,12 @@ public abstract class AbstractShowByteCodeAction extends AnAction {
     private static boolean isMarkedForCompilation(Project project, VirtualFile virtualFile) {
         final CompilerManager compilerManager = CompilerManager.getInstance(project);
         return !compilerManager.isUpToDate(compilerManager.createFilesCompileScope(new VirtualFile[]{virtualFile}));
+    }
+
+    @Override
+    @NotNull
+    public ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
     }
 
 }

@@ -67,8 +67,8 @@ public class BytecodeConverter {
         String res = null;
         try {
             res = processClassFile(virtualFile.contentsToByteArray());
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            log.error("processClassFile failed", e);
         }
         return res;
     }
@@ -111,7 +111,7 @@ public class BytecodeConverter {
                                 return processClassFile(classFile.contentsToByteArray());
                             }
                         }
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         log.error("getByteCode failed", e);
                     }
                     return null;
