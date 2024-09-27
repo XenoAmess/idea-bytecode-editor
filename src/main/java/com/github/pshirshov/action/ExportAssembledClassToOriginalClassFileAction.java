@@ -7,6 +7,7 @@ import javax.swing.Icon;
 import com.github.pshirshov.ByteCodeFileEditor;
 import com.github.pshirshov.vfs.DisassembledVirtualFile;
 import com.intellij.icons.AllIcons;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -61,6 +62,12 @@ public class ExportAssembledClassToOriginalClassFileAction extends ExportAssembl
             @NotNull VirtualFile selection
     ) throws IOException {
         return this.getVirtualFile().getOriginalClassVirtualFile().getOutputStream(this);
+    }
+
+    @Override
+    @NotNull
+    public ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
     }
 
 }

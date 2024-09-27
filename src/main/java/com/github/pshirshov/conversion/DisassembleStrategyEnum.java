@@ -1,11 +1,16 @@
 package com.github.pshirshov.conversion;
 
 import com.github.pshirshov.conversion.impl.asm.AsmDisassembler;
+import com.github.pshirshov.conversion.impl.asm.AsmFileType;
 import com.github.pshirshov.conversion.impl.asm_xml.AsmXmlAssembler;
 import com.github.pshirshov.conversion.impl.asm_xml.AsmXmlDisassembler;
+import com.github.pshirshov.conversion.impl.asm_xml.AsmXmlFileType;
 import com.github.pshirshov.conversion.impl.jasmin.JasminDisassembler;
+import com.github.pshirshov.conversion.impl.jasmin.JasminFileType;
 import com.github.pshirshov.conversion.impl.krakatau.KrakatauAssembler;
 import com.github.pshirshov.conversion.impl.krakatau.KrakatauDisassembler;
+import com.github.pshirshov.conversion.impl.krakatau.KrakatauFileType;
+import com.intellij.openapi.fileTypes.FileType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +25,8 @@ public enum DisassembleStrategyEnum implements DisassembleStrategy {
     JASMIN(
             DisassembleStrategyConstant.STRING_JASMIN,
             null,
-            JasminDisassembler.INSTANCE
+            JasminDisassembler.INSTANCE,
+            JasminFileType.INSTANCE
     ),
 
     /**
@@ -29,7 +35,8 @@ public enum DisassembleStrategyEnum implements DisassembleStrategy {
     ASM(
             DisassembleStrategyConstant.STRING_ASM,
             null,
-            AsmDisassembler.INSTANCE
+            AsmDisassembler.INSTANCE,
+            AsmFileType.INSTANCE
     ),
 
     /**
@@ -38,7 +45,8 @@ public enum DisassembleStrategyEnum implements DisassembleStrategy {
     ASM_XML(
             DisassembleStrategyConstant.STRING_ASM_XML,
             AsmXmlAssembler.INSTANCE,
-            AsmXmlDisassembler.INSTANCE
+            AsmXmlDisassembler.INSTANCE,
+            AsmXmlFileType.INSTANCE
     ),
 
     /**
@@ -47,7 +55,8 @@ public enum DisassembleStrategyEnum implements DisassembleStrategy {
     KRAKATAU(
             DisassembleStrategyConstant.STRING_KRAKATAU,
             KrakatauAssembler.INSTANCE,
-            KrakatauDisassembler.INSTANCE
+            KrakatauDisassembler.INSTANCE,
+            KrakatauFileType.INSTANCE
     );
 
     @Getter
@@ -61,5 +70,15 @@ public enum DisassembleStrategyEnum implements DisassembleStrategy {
     @Getter
     @NotNull
     private final Disassembler disassembler;
+
+    @Getter
+    @NotNull
+    private final FileType fileType;
+
+    @NotNull
+    @Override
+    public String getFileNameSuffix(){
+        return this.getName();
+    }
 
 }

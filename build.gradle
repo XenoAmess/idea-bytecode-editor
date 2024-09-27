@@ -1,14 +1,17 @@
 plugins {
     id 'java'
-    id "org.jetbrains.intellij" version "1.13.3"
+    id "org.jetbrains.intellij" version "1.17.4"
 }
 
 apply plugin: 'idea'
 
 allprojects {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
     compileJava.options.encoding = 'UTF-8'
+//    kotlin {
+//        jvmToolchain(17)
+//    }
 }
 
 repositories {

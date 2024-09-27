@@ -13,6 +13,7 @@ import com.github.pshirshov.conversion.Assembler;
 import com.github.pshirshov.util.IdeaUtils;
 import com.github.pshirshov.vfs.DisassembledVirtualFile;
 import com.intellij.icons.AllIcons;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
@@ -122,6 +123,12 @@ public class ExportAssembledClassAction extends AnAction {
                         virtualFile.getPresentableName()
                 ).toFile().getCanonicalPath()
         );
+    }
+
+    @Override
+    @NotNull
+    public ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
     }
 
 }
