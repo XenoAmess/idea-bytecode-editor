@@ -13,7 +13,7 @@ import java.util.Collections;
 
 public class KrakatauFetchUtil {
 
-    public static String KRAKATAU_JAVA_WRAPPER_VERSION = "0.0.4";
+    public static String KRAKATAU_JAVA_WRAPPER_VERSION = "0.0.5";
 
     public static volatile Class<?> KRAKATAU_UTIL_CLASS;
 
