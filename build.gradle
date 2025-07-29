@@ -49,7 +49,7 @@ dependencies {
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.18.0'
     implementation group: 'commons-io', name: 'commons-io', version: '2.20.0'
     implementation group: 'org.apache.commons', name: 'commons-vfs2', version: '2.10.0'
-    implementation 'com.squareup.okio:okio:3.15.0'
+    implementation 'com.squareup.okio:okio:3.16.0'
 
     compileOnly 'org.projectlombok:lombok:1.18.38'
     annotationProcessor 'org.projectlombok:lombok:1.18.38'
