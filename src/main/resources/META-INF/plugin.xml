@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.github.pshirshov.bytecodeeditor.xenoamess</id>
     <name>Bytecode Editor(XenoAmess TPM)</name>
-    <version>0.7.0</version>
+    <version>0.8.0</version>
     <vendor
             email="xenoamess@gmail.com"
             url="https://github.com/XenoAmess"
@@ -86,6 +86,9 @@
         </ul>
         <ul>0.7.0
             <li>add linux support</li>
+        </ul>
+        <ul>0.8.0
+            <li>maintenance update</li>
         </ul>
     ]]></change-notes>
     <idea-version since-build="241.14494.240"/>
