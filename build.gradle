@@ -5,9 +5,12 @@ plugins {
 
 apply plugin: 'idea'
 
-allprojects {
+java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+}
+
+allprojects {
     compileJava.options.encoding = 'UTF-8'
 }
 
@@ -34,7 +37,7 @@ version = plugin_version
 dependencies {
     intellijPlatform {
         create(idea_type, idea_version)
-        bundledPlugins(['java', 'ByteCodeViewer'])
+        bundledPlugins(['com.intellij.java', 'ByteCodeViewer'])
     }
 
     implementation platform('com.fasterxml.jackson:jackson-bom:2.21.1')
