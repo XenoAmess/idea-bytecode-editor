@@ -17,9 +17,9 @@ jobs:
       - uses: actions/cache@v5.0.3
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-gradle-m2-${{ hashFiles('**/build.gradle') }}
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/shade_asm/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-m2-
       - uses: actions/cache@v5.0.3
         with:
           path: ~/.gradle/caches/
@@ -29,7 +29,7 @@ jobs:
       - uses: actions/cache@v5.0.3
         with:
           path: ~/.gradle/wrapper/
-          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/build.gradle') }}
+          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Set up JDK ${{ matrix.java }}
@@ -37,13 +37,14 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
           distribution: adopt
-      - name: Build plugin
+      - name: Build shade_asm
         run: |
           git submodule init
           git submodule update
           cd ./shade_asm
-          chmod 777 ./mvnw
-          ./mvnw install
-          cd ..
-          chmod 777 ./gradlew
+          chmod +x ./mvnw
+          ./mvnw install -DskipTests
+      - name: Build plugin
+        run: |
+          chmod +x ./gradlew
           ./gradlew clean buildPlugin
