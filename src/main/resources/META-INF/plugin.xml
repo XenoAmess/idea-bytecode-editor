@@ -89,6 +89,8 @@
         </ul>
         <ul>0.8.0
             <li>maintenance update</li>
+            <li>add jdk25 support for asm</li>
+            <li>logo update</li>
         </ul>
     ]]></change-notes>
     <idea-version since-build="241.14494.240"/>
