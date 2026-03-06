@@ -49,7 +49,7 @@ jobs:
           ./gradlew clean buildPlugin
 
       - name: Upload plugin artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: idea-bytecode-editor-${{ runner.os }}-${{ github.run_number }}
           path: build/distributions/idea-bytecode-editor-*.zip
