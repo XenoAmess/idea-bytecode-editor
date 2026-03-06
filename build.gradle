@@ -1,17 +1,17 @@
 plugins {
     id 'java'
-    id "org.jetbrains.intellij" version "1.17.4"
+    id 'org.jetbrains.intellij.platform' version '2.2.1'
 }
 
 apply plugin: 'idea'
 
-allprojects {
+java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+}
+
+allprojects {
     compileJava.options.encoding = 'UTF-8'
-//    kotlin {
-//        jvmToolchain(17)
-//    }
 }
 
 repositories {
@@ -27,20 +27,19 @@ repositories {
         url "https://plugins.gradle.org/m2/"
     }
     gradlePluginPortal()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
-def myPlugins = ['java','ByteCodeViewer']
-
-intellij {
-    version.set(idea_version)
-    plugins.set(myPlugins)
-    pluginName.set(plugin_name)
-    updateSinceUntilBuild.set(false)
-}
-
-version plugin_version
+version = plugin_version
 
 dependencies {
+    intellijPlatform {
+        create(idea_type, idea_version)
+        bundledPlugins(['com.intellij.java', 'ByteCodeViewer'])
+    }
+
     implementation platform('com.fasterxml.jackson:jackson-bom:2.21.1')
 
     implementation group: 'ca.mcgill.sable', name: 'jasmin', version: '3.0.3'
@@ -56,4 +55,11 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok:1.18.42'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.42'
+}
+
+intellijPlatform {
+    pluginConfiguration {
+        name = plugin_name
+    }
+    buildSearchableOptions = false
 }
