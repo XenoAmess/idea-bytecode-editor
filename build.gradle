@@ -50,11 +50,11 @@ dependencies {
     implementation group: 'org.apache.commons', name: 'commons-vfs2', version: '2.10.0'
     implementation 'com.squareup.okio:okio:3.17.0'
 
-    compileOnly 'org.projectlombok:lombok:1.18.44'
-    annotationProcessor 'org.projectlombok:lombok:1.18.44'
+    compileOnly 'org.projectlombok:lombok:1.18.46'
+    annotationProcessor 'org.projectlombok:lombok:1.18.46'
 
-    testCompileOnly 'org.projectlombok:lombok:1.18.44'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.44'
+    testCompileOnly 'org.projectlombok:lombok:1.18.46'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.46'
 }
 
 intellijPlatform {
